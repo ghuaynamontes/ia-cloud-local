@@ -1,0 +1,22 @@
+version: "3.8"
+
+services:
+  localstack:
+    container_name: localstack_main
+    image: localstack/localstack
+    ports:
+      - "127.0.0.1:4566:4566"            # Gateway principal de LocalStack
+      - "127.0.0.1:4510-4559:4510-4559"  # Puertos para servicios externos
+    environment:
+      - SERVICES=s3,lambda,dynamodb,iam  # Solo activamos lo que usaremos
+      - DEBUG=1
+      - DOCKER_HOST=unix:///var/run/docker.sock
+    volumes:
+      - "./localstack_data:/var/lib/localstack"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    networks:
+      - cloud-network
+
+networks:
+  cloud-network:
+    driver: bridge
