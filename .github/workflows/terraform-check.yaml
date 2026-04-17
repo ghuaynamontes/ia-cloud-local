@@ -8,7 +8,7 @@ on:
 
 jobs:
   terraform:
-    name: "Terraform Plan"
+    name: "Terraform Plan & Apply"
     runs-on: self-hosted
     
     defaults:
@@ -18,13 +18,22 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          # CRÍTICO: No borra los archivos locales del Runner (como el .tfstate) 
+          # entre ejecuciones, evitando conflictos de "Resource Already Exists".
+          clean: false 
 
-      # ESTE ES EL PASO CLAVE: Descarga Terraform directamente para el Job
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
         with:
           terraform_version: 1.7.0
-          terraform_wrapper: false # Desactivamos el wrapper para evitar conflictos de salida
+          terraform_wrapper: false 
+
+      # PASO ADICIONAL: Instalamos 'requests' en la carpeta de la Lambda 
+      # para que Terraform lo incluya en el archivo .zip al desplegar.
+      - name: Install Python Dependencies
+        run: |
+          pip install requests -t .
 
       - name: Terraform Init
         run: terraform init
