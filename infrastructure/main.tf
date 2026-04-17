@@ -5,6 +5,9 @@ terraform {
       version = "~> 4.67.0" # Forzamos la serie 4.x, que es 100% compatible con LocalStack 3.x
     }
   }
+  backend "local" {
+    path = "terraform.tfstate"
+  }
 }
 
 provider "aws" {
