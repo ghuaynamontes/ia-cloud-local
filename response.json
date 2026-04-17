@@ -1,1 +1,1 @@
-{"status": 500, "body": "Could not connect to the endpoint URL: \"http://localhost:4566/ia-processed-bucket-v2/data.txt\""}
+{"statusCode": 200, "body": "OK"}
