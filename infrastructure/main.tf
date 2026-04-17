@@ -36,7 +36,7 @@ data "archive_file" "lambda_zip" {
 # Bucket de S3
 # 1. El Bucket sin configuraciones extra
 resource "aws_s3_bucket" "input_bucket" {
-  bucket = "ia-input-bucket"
+  bucket = "ia-processed-bucket-v2"
   # Eliminamos cualquier bloque interno de configuration por ahora
 }
 
