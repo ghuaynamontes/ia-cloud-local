@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-  pull_request:
 
 jobs:
   terraform:
@@ -19,8 +18,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          # CRÍTICO: No borra los archivos locales del Runner (como el .tfstate) 
-          # entre ejecuciones, evitando conflictos de "Resource Already Exists".
           clean: false 
 
       - name: Setup Terraform
@@ -29,18 +26,10 @@ jobs:
           terraform_version: 1.7.0
           terraform_wrapper: false 
 
-      # PASO ADICIONAL: Instalamos 'requests' en la carpeta de la Lambda 
-      # para que Terraform lo incluya en el archivo .zip al desplegar.
-      - name: Install Python Dependencies
-        run: |
-          pip install requests -t .
-
+      # ELIMINAMOS EL PASO DE PIP PARA EVITAR ERRORES DE PATH
       - name: Terraform Init
         run: terraform init
 
-      - name: Terraform Plan
-        run: terraform plan -no-color
-
       - name: Terraform Apply
-        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        if: github.ref == 'refs/heads/main'
         run: terraform apply -auto-approve -no-color
