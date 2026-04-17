@@ -3,14 +3,18 @@ version: "3.8"
 services:
   localstack:
     container_name: localstack_main
-    image: localstack/localstack
+    # Cambiamos 'latest' por una versión estable específica
+    image: localstack/localstack:3.4.0
     ports:
-      - "127.0.0.1:4566:4566"            # Gateway principal de LocalStack
-      - "127.0.0.1:4510-4559:4510-4559"  # Puertos para servicios externos
+      - "127.0.0.1:4566:4566"
     environment:
-      - SERVICES=s3,lambda,dynamodb,iam  # Solo activamos lo que usaremos
+      - SERVICES=s3,lambda,dynamodb,iam
       - DEBUG=1
       - DOCKER_HOST=unix:///var/run/docker.sock
+      # Bloqueo total de funciones PRO
+      - ACTIVATE_PRO=0
+      - LAMBDA_EXECUTOR=docker
+      - SKIP_SSL_CERT_DOWNLOAD=1
     volumes:
       - "./localstack_data:/var/lib/localstack"
       - "/var/run/docker.sock:/var/run/docker.sock"

@@ -1,0 +1,1 @@
+"La arquitectura de microservicios permite escalar componentes de forma independiente, pero introduce complejidad en la red y la gestión de datos."

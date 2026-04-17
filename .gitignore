@@ -1,0 +1,16 @@
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.*
+.terraform.lock.hcl
+
+# Python
+__pycache__/
+venv/
+*.py[cod]
+
+# LocalStack
+localstack_data/
+
+# Archivos grandes de despliegue
+*.zip
