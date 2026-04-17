@@ -1,0 +1,8 @@
+# SDK de AWS para Python (Indispensable para S3, DynamoDB y Lambda)
+boto3>=1.34.0
+
+# Librería para realizar peticiones HTTP (Para conectar con la API de Ollama)
+requests>=2.31.0
+
+# Herramienta para interactuar con LocalStack desde Python (Opcional pero recomendada)
+localstack-client>=2.0.0
